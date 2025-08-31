@@ -367,28 +367,32 @@ body {
     font-style: normal;
 }
 
-/* Responsive - diseño más angosto para mobile */
+/* Responsive - ajustar para que quepa completo en mobile */
 @media (max-width: 768px) {
     body {
         overflow-x: auto;
         background-color: #000000;
-        padding: 10px;
+        padding: 5px;
+        margin: 0;
     }
     
     .cv-container {
-        width: 180mm !important;
-        height: 254mm !important;
-        min-width: 180mm !important;
-        margin: 10px auto !important;
+        width: 95vw !important;
+        height: auto !important;
+        min-width: 95vw !important;
+        max-width: 95vw !important;
+        margin: 5px auto !important;
         flex-direction: row !important;
         display: flex !important;
-        transform: scale(0.95);
+        transform: none;
+        overflow: visible !important;
     }
 
     .personal-column {
         width: 25% !important;
         min-width: 25% !important;
-        padding: 20px 15px !important;
+        padding: 15px 10px !important;
+        overflow: hidden;
     }
 
     .main-content {
@@ -396,20 +400,60 @@ body {
         min-width: 75% !important;
         flex-direction: row !important;
         display: flex !important;
+        overflow: hidden;
     }
 
     .content-column {
         width: 50% !important;
         min-width: 50% !important;
-        padding: 20px 18px !important;
+        padding: 15px 12px !important;
+        overflow: hidden;
     }
 
     .cv-section h2 {
-        font-size: 28px !important;
+        font-size: 24px !important;
+        margin-bottom: 15px !important;
+        line-height: 0.9 !important;
+    }
+
+    .cv-section p {
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 10px !important;
     }
 
     .profile-image {
-        width: 120px !important;
-        height: 150px !important;
+        width: 100px !important;
+        height: 120px !important;
+    }
+
+    .cv-title {
+        font-size: 28px !important;
+    }
+
+    .name {
+        font-size: 14px !important;
+    }
+
+    .contact-info p,
+    .personal-details p {
+        font-size: 10px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .education-item h3,
+    .experience-item h3 {
+        font-size: 12px !important;
+    }
+
+    .skill-category h4,
+    .competency-category h4 {
+        font-size: 11px !important;
+    }
+
+    .skill-category li,
+    .competency-category li,
+    .experience-item li {
+        font-size: 10px !important;
     }
 }
