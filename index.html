@@ -180,14 +180,64 @@
                 // Esperar un momento para que se oculte
                 await new Promise(resolve => setTimeout(resolve, 100));
                 
-                // Capturar directamente con html2canvas
+                // Forzar vista desktop para la captura
                 const cvContainer = document.querySelector('.cv-container');
+                const body = document.body;
+                
+                // Guardar estilos originales
+                const originalBodyClass = body.className;
+                const originalOverflow = body.style.overflow;
+                
+                // Aplicar forzado de vista desktop
+                body.style.overflow = 'visible';
+                body.classList.add('force-desktop');
+                
+                // CSS temporal para forzar desktop
+                const style = document.createElement('style');
+                style.textContent = `
+                    .force-desktop .cv-container {
+                        width: 210mm !important;
+                        height: 297mm !important;
+                        flex-direction: row !important;
+                        display: flex !important;
+                        transform: none !important;
+                        margin: 20px auto !important;
+                        padding: 0 !important;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+                    }
+                    .force-desktop .personal-column {
+                        width: 25% !important;
+                        flex-direction: column !important;
+                        padding: 30px 20px !important;
+                        border-right: none !important;
+                    }
+                    .force-desktop .main-content {
+                        width: 75% !important;
+                        flex-direction: row !important;
+                        display: flex !important;
+                    }
+                    .force-desktop .content-column {
+                        width: 50% !important;
+                        padding: 30px 25px !important;
+                    }
+                    .force-desktop .competencies-grid {
+                        grid-template-columns: 1fr 1fr !important;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Esperar para que se apliquen los estilos
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Capturar con html2canvas
                 const canvas = await html2canvas(cvContainer, {
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#fdfbf0',
-                    logging: false
+                    logging: false,
+                    width: cvContainer.offsetWidth,
+                    height: cvContainer.offsetHeight
                 });
                 
                 // Crear PDF
@@ -211,6 +261,15 @@
                 console.error('Error al generar PDF:', error);
                 btn.textContent = 'error - reintenta';
             } finally {
+                // Limpiar estilos temporales
+                try {
+                    document.head.removeChild(style);
+                } catch (e) {
+                    console.log('Style already removed');
+                }
+                body.className = originalBodyClass;
+                body.style.overflow = originalOverflow;
+                
                 // Mostrar el botón de nuevo
                 btn.style.visibility = 'visible';
             }
