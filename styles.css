@@ -31,6 +31,10 @@ body {
     border-right: 2px solid #e9ecef;
 }
 
+.spacer {
+    height: 40px;
+}
+
 /* Foto de perfil */
 .profile-photo {
     margin-bottom: 30px;
