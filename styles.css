@@ -367,35 +367,35 @@ body {
     font-style: normal;
 }
 
-/* Responsive para pantallas pequeñas */
+/* Responsive - mantener diseño exacto en todas las pantallas */
 @media (max-width: 768px) {
+    body {
+        overflow-x: auto;
+    }
+    
     .cv-container {
-        width: 100%;
-        height: auto;
-        flex-direction: column;
+        width: 210mm !important;
+        height: 297mm !important;
+        min-width: 210mm !important;
+        margin: 20px auto !important;
+        flex-direction: row !important;
+        display: flex !important;
     }
 
     .personal-column {
-        width: 100%;
-        border-right: none;
-        border-bottom: 2px solid #e9ecef;
+        width: 25% !important;
+        min-width: 25% !important;
     }
 
     .main-content {
-        width: 100%;
-        flex-direction: column;
+        width: 75% !important;
+        min-width: 75% !important;
+        flex-direction: row !important;
+        display: flex !important;
     }
 
     .content-column {
-        width: 100%;
-    }
-
-    .content-column:first-child {
-        border-right: none;
-        border-bottom: 1px solid #e9ecef;
-    }
-
-    .competencies-grid {
-        grid-template-columns: 1fr;
+        width: 50% !important;
+        min-width: 50% !important;
     }
 }
