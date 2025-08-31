@@ -375,7 +375,7 @@ body {
         padding: 0;
         margin: 0;
     }
-    
+
     .cv-container {
         width: 100vw !important;
         height: auto !important;
@@ -472,12 +472,37 @@ body {
     .experience-item {
         margin-bottom: 25px !important;
         padding-bottom: 15px !important;
+        border-bottom: 2px solid #6c757d !important;
+        overflow: visible !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .education-item:last-child,
+    .experience-item:last-child {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
     }
 
     .education-item h3,
     .experience-item h3 {
         font-size: 13px !important;
         margin-bottom: 8px !important;
+        font-weight: 100 !important;
+        color: #000000 !important;
+        text-transform: none !important;
+        overflow: visible !important;
+        word-wrap: break-word !important;
+    }
+
+    .education-item .institution,
+    .education-item .year,
+    .experience-item .company,
+    .experience-item .year {
+        font-size: 11px !important;
+        margin-bottom: 6px !important;
+        overflow: visible !important;
+        word-wrap: break-word !important;
     }
 
     .skill-category h4,
@@ -501,6 +526,18 @@ body {
     .thin-subtitle {
         font-size: 10px !important;
         margin-bottom: 8px !important;
+        font-weight: 100 !important;
+        color: #495057 !important;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        overflow: visible !important;
+        word-wrap: break-word !important;
+        text-transform: none !important;
+    }
+
+    .thin-subtitles {
+        margin-top: 15px !important;
+        overflow: visible !important;
+        width: 100% !important;
     }
 
     .profile-photo {
@@ -510,5 +547,17 @@ body {
 
     .personal-info {
         text-align: center;
+    }
+
+    /* Arreglos específicos para formación académica */
+    .cv-section:has(.education-item) {
+        overflow: visible !important;
+        width: 100% !important;
+    }
+
+    .education-item * {
+        overflow: visible !important;
+        word-wrap: break-word !important;
+        max-width: 100% !important;
     }
 }
