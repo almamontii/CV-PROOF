@@ -29,6 +29,9 @@ body {
     background: #f8f9fa;
     padding: 30px 20px;
     border-right: 2px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .spacer {
