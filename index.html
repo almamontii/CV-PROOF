@@ -15,7 +15,7 @@
     <div class="download-button-container">
         <button id="downloadPDF" class="download-btn">descargar pdf</button>
     </div>
-    
+
     <div class="cv-container">
         <!-- Primera columna - Información personal -->
         <div class="personal-column">
@@ -163,72 +163,31 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <script>
-        document.getElementById('downloadPDF').addEventListener('click', async function() {
+
+        <script>
+        document.getElementById('downloadPDF').addEventListener('click', async function () {
             const btn = this;
             const originalText = btn.textContent;
-            const downloadContainer = document.querySelector('.download-button-container');
             
             // Cambiar texto del botón
             btn.textContent = 'generando pdf...';
             btn.disabled = true;
             
-            // Ocultar el botón temporalmente
-            downloadContainer.style.display = 'none';
-            
-            // Forzar vista desktop para la captura
-            const cvContainer = document.querySelector('.cv-container');
-            const body = document.body;
-            
-            // Guardar estilos originales
-            const originalBodyClass = body.className;
-            const originalOverflow = body.style.overflow;
-            
-            // Aplicar forzado de vista desktop
-            body.style.overflow = 'visible';
-            body.classList.add('force-desktop');
-            
-            // CSS temporal para forzar desktop
-            const style = document.createElement('style');
-            style.textContent = `
-                .force-desktop .cv-container {
-                    width: 210mm !important;
-                    height: 297mm !important;
-                    flex-direction: row !important;
-                    display: flex !important;
-                    transform: none !important;
-                }
-                .force-desktop .personal-column {
-                    width: 25% !important;
-                    flex-direction: column !important;
-                }
-                .force-desktop .main-content {
-                    width: 75% !important;
-                    flex-direction: row !important;
-                    display: flex !important;
-                }
-                .force-desktop .content-column {
-                    width: 50% !important;
-                }
-                .force-desktop .competencies-grid {
-                    grid-template-columns: 1fr 1fr !important;
-                }
-            `;
-            document.head.appendChild(style);
-            
             try {
-                // Esperar para que se apliquen los estilos
-                await new Promise(resolve => setTimeout(resolve, 500));
+                // Ocultar el botón temporalmente
+                btn.style.visibility = 'hidden';
                 
-                // Capturar con html2canvas
+                // Esperar un momento para que se oculte
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                // Capturar directamente con html2canvas
+                const cvContainer = document.querySelector('.cv-container');
                 const canvas = await html2canvas(cvContainer, {
                     scale: 2,
                     useCORS: true,
-                    allowTaint: false,
+                    allowTaint: true,
                     backgroundColor: '#fdfbf0',
-                    width: cvContainer.offsetWidth,
-                    height: cvContainer.offsetHeight
+                    logging: false
                 });
                 
                 // Crear PDF
@@ -249,18 +208,15 @@
                 btn.textContent = '¡descargado!';
                 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error al generar PDF:', error);
                 btn.textContent = 'error - reintenta';
+            } finally {
+                // Mostrar el botón de nuevo
+                btn.style.visibility = 'visible';
             }
             
-            // Limpiar estilos temporales
-            document.head.removeChild(style);
-            body.className = originalBodyClass;
-            body.style.overflow = originalOverflow;
-            
-            // Restaurar botón
+            // Restaurar botón después de 2 segundos
             setTimeout(() => {
-                downloadContainer.style.display = 'block';
                 btn.textContent = originalText;
                 btn.disabled = false;
             }, 2000);
