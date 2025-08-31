@@ -42,8 +42,8 @@ body {
 }
 
 .profile-image {
-    width: 130px;
-    height: 150px;
+    width: 150px;
+    height: 180px;
     border-radius: 0;
     object-fit: cover;
     border: none;
@@ -51,8 +51,8 @@ body {
 }
 
 .profile-placeholder {
-    width: 130px;
-    height: 150px;
+    width: 150px;
+    height: 180px;
     background: #e9ecef;
     display: flex;
     align-items: center;
