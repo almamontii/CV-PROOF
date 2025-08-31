@@ -367,24 +367,28 @@ body {
     font-style: normal;
 }
 
-/* Responsive - mantener diseño exacto en todas las pantallas */
+/* Responsive - diseño más angosto para mobile */
 @media (max-width: 768px) {
     body {
         overflow-x: auto;
+        background-color: #000000;
+        padding: 10px;
     }
     
     .cv-container {
-        width: 210mm !important;
-        height: 297mm !important;
-        min-width: 210mm !important;
-        margin: 20px auto !important;
+        width: 180mm !important;
+        height: 254mm !important;
+        min-width: 180mm !important;
+        margin: 10px auto !important;
         flex-direction: row !important;
         display: flex !important;
+        transform: scale(0.95);
     }
 
     .personal-column {
         width: 25% !important;
         min-width: 25% !important;
+        padding: 20px 15px !important;
     }
 
     .main-content {
@@ -397,5 +401,15 @@ body {
     .content-column {
         width: 50% !important;
         min-width: 50% !important;
+        padding: 20px 18px !important;
+    }
+
+    .cv-section h2 {
+        font-size: 28px !important;
+    }
+
+    .profile-image {
+        width: 120px !important;
+        height: 150px !important;
     }
 }
