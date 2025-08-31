@@ -18,6 +18,40 @@ body {
     font-weight: 100 !important;
 }
 
+/* Botón de descarga PDF */
+.download-button-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.download-btn {
+    background-color: #333;
+    color: #fdfbf0;
+    border: none;
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 300;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    border-radius: 0;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #555;
+}
+
+/* Ocultar botón al imprimir */
+@media print {
+    .download-button-container {
+        display: none !important;
+    }
+}
+
 
 
 /* Contenedor principal - Tamaño A4 */
@@ -547,6 +581,11 @@ body {
 
     .personal-info {
         text-align: center;
+    }
+
+    /* Ocultar botón de descarga en móviles */
+    .download-button-container {
+        display: none !important;
     }
 
     /* Arreglos específicos para formación académica */

@@ -11,7 +11,11 @@
 </head>
 
 <body>
-
+    <!-- Botón de descarga PDF -->
+    <div class="download-button-container">
+        <button id="downloadPDF" class="download-btn">descargar pdf</button>
+    </div>
+    
     <div class="cv-container">
         <!-- Primera columna - Información personal -->
         <div class="personal-column">
@@ -157,7 +161,111 @@
         </div>
     </div>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        document.getElementById('downloadPDF').addEventListener('click', async function() {
+            const btn = this;
+            const originalText = btn.textContent;
+            const downloadContainer = document.querySelector('.download-button-container');
+            
+            // Cambiar texto del botón
+            btn.textContent = 'generando pdf...';
+            btn.disabled = true;
+            
+            // Ocultar el botón temporalmente
+            downloadContainer.style.display = 'none';
+            
+            // Forzar vista desktop para la captura
+            const cvContainer = document.querySelector('.cv-container');
+            const body = document.body;
+            
+            // Guardar estilos originales
+            const originalBodyClass = body.className;
+            const originalOverflow = body.style.overflow;
+            
+            // Aplicar forzado de vista desktop
+            body.style.overflow = 'visible';
+            body.classList.add('force-desktop');
+            
+            // CSS temporal para forzar desktop
+            const style = document.createElement('style');
+            style.textContent = `
+                .force-desktop .cv-container {
+                    width: 210mm !important;
+                    height: 297mm !important;
+                    flex-direction: row !important;
+                    display: flex !important;
+                    transform: none !important;
+                }
+                .force-desktop .personal-column {
+                    width: 25% !important;
+                    flex-direction: column !important;
+                }
+                .force-desktop .main-content {
+                    width: 75% !important;
+                    flex-direction: row !important;
+                    display: flex !important;
+                }
+                .force-desktop .content-column {
+                    width: 50% !important;
+                }
+                .force-desktop .competencies-grid {
+                    grid-template-columns: 1fr 1fr !important;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            try {
+                // Esperar para que se apliquen los estilos
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Capturar con html2canvas
+                const canvas = await html2canvas(cvContainer, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: '#fdfbf0',
+                    width: cvContainer.offsetWidth,
+                    height: cvContainer.offsetHeight
+                });
+                
+                // Crear PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                const imgWidth = 210;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save('CV-Robin-Roberto.pdf');
+                
+                btn.textContent = '¡descargado!';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                btn.textContent = 'error - reintenta';
+            }
+            
+            // Limpiar estilos temporales
+            document.head.removeChild(style);
+            body.className = originalBodyClass;
+            body.style.overflow = originalOverflow;
+            
+            // Restaurar botón
+            setTimeout(() => {
+                downloadContainer.style.display = 'block';
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 2000);
+        });
+    </script>
 </body>
 
 </html>
